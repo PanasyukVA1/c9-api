@@ -1,32 +1,30 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: c9-api
 spec:
   replicas: 2
-  selector:
-    matchLabels:
-      app: c9-api
   template:
     metadata:
       labels:
         app: c9-api
     spec:
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
       containers:
       - name: c9-api
         image: c9registry.azurecr.io/c9-api:v1
         ports:
-        - containerPort: 6379
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: c9-api-service
 spec:
-  ports:
-  - port: 6379
   selector:
     app: c9-api
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 80
+      nodePort: 3001
   type: LoadBalancer
