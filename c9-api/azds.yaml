@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: c9-api
-        image: c9registry.azurecr.io/c9-api:v1
+        image: c9registry.azurecr.io/c9api:latest
         ports:
         - containerPort: 80
 ---
